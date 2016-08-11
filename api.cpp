@@ -1,4 +1,5 @@
 #include <fstream>
+#include <iostream>
 #include <unistd.h>
 #include <string>
 #include <Poco/StreamCopier.h>
@@ -18,6 +19,11 @@ const std::string SMSSend::PATH("/api/sms/send");
 
 void SMSSend::handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response)
 {
+  response.setChunkedTransferEncoding(true);
+  response.setContentType("text/html");
+
+  std::ostream& ostr = response.send();
+  ostr << "dongkechang";
 }
 
 const std::string DefaultHandler::PATH("/default");
@@ -25,5 +31,10 @@ const std::string DefaultHandler::PATH("/default");
 
 void DefaultHandler::handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response)
 {
+  response.setChunkedTransferEncoding(true);
+  response.setContentType("text/html");
+
   response.setStatusAndReason(HTTPServerResponse::HTTP_NOT_FOUND, HTTPServerResponse::HTTP_REASON_FORBIDDEN);
+  std::ostream& ostr = response.send();
+  ostr << "ACCESS DENIED!";
 }
