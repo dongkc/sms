@@ -42,13 +42,6 @@ void error_handler(void)
   }
 }
 
-/* Interrupt signal handler */
-void interrupt(int sign)
-{
-  signal(sign, SIG_IGN);
-  gshutdown = TRUE;
-}
-
 #endif
 int send_sms(const string& rc_path, const string& phone_num, const string& text)
 {
@@ -56,9 +49,6 @@ int send_sms(const string& rc_path, const string& phone_num, const string& text)
 
   GSM_SMSMessage sms;
   GSM_SMSC PhoneSMSC;
-  char recipient_number[] = "13488845771";
-  //char message_text[] = u8"动客场测试";
-  char message_text[] = u8"dongkechang测试";
   GSM_Debug_Info *debug_info;
 
   /*
@@ -182,6 +172,8 @@ SmsSend::SmsSend(const string& path)
 uint8_t SmsSend::send(const string& phone_num, const string& sms)
 {
   send_sms(path, phone_num, sms);
+
+  return 0;
 }
 
 SmsSend::~SmsSend()
