@@ -11,4 +11,4 @@ RemainAfterExit=yes
 SysVStartPriority=99
 
 [Install]
-
+WantedBy=multi-user.target
