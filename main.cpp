@@ -2,6 +2,7 @@
 #include <Poco/Util/Option.h>
 #include <Poco/Util/OptionSet.h>
 #include <Poco/Util/HelpFormatter.h>
+#include <Poco/Net/HTMLForm.h>
 #include <glog/logging.h>
 #include <gflags/gflags.h>
 
@@ -15,6 +16,7 @@ using Poco::Util::OptionSet;
 using Poco::Util::HelpFormatter;
 
 using namespace std;
+using namespace Poco::Net;
 
 int main_(int argc, char *argv[])
 {
@@ -22,7 +24,7 @@ int main_(int argc, char *argv[])
   google::InitGoogleLogging(argv[0]);
   google::InstallFailureSignalHandler();
 
-  SmsSend sms("/root/.gammurc");
+  SmsSend sms("/etc/gammurc");
 
   sms.send("13488845771", "动测试");
   return 0;
