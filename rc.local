@@ -1,0 +1,2 @@
+#!/bin/sh
+/usr/bin/smsd & 2>/tmp/log

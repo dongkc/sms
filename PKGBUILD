@@ -26,10 +26,14 @@ build()
 
 package() {
   cd sms
-  mkdir -p "${pkgdir}/usr/bin/"
-  mkdir -p "${pkgdir}/etc/"
+  mkdir -p "${pkgdir}/usr/bin"
+  mkdir -p "${pkgdir}/etc/rc.d"
+  mkdir -p "${pkgdir}/usr/lib/systemd/system"
+
   install -m 755 smsd "${pkgdir}/usr/bin/smsd"
   install -m 755 gammurc "${pkgdir}/etc/gammurc"
+  install -m 755 rc.local "${pkgdir}/etc/rc.d/rc.local"
+  install -m 755 rc-local.service "${pkgdir}/usr/lib/systemd/system/rc-local.service"
 }
 
 md5sums=('SKIP')

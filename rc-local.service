@@ -1,0 +1,14 @@
+[Unit]
+Description="/etc/rc.d/rc.local Compatibility"
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=/etc/rc.d/rc.local start
+TimeoutSec=0
+StandardInput=tty
+RemainAfterExit=yes
+SysVStartPriority=99
+
+[Install]
+
