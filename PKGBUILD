@@ -1,7 +1,7 @@
 #Maintainer: M0Rf30
 
 pkgname=sms-git
-pkgver=11.8a94724
+pkgver=13.65fe4c8
 pkgrel=1
 pkgdesc="sending sms."
 url="http://code.google.com/p/gyp/"
@@ -29,7 +29,7 @@ package() {
   mkdir -p "${pkgdir}/usr/bin/"
   mkdir -p "${pkgdir}/etc/"
   install -m 755 smsd "${pkgdir}/usr/bin/smsd"
-  install -m 755 gammurc "${pkgdir}/gammurc"
+  install -m 755 gammurc "${pkgdir}/etc/gammurc"
 }
 
 md5sums=('SKIP')
