@@ -41,14 +41,14 @@ namespace
   }
 
   /* Function to handle errors */
-  void error_handler(void)
+  int error_handler(void)
   {
     if (error != ERR_NONE) {
       printf("ERROR: %s\n", GSM_ErrorString(error));
       if (GSM_IsConnected(s))
         GSM_TerminateConnection(s);
-      exit(error);
     }
+    return error;
   }
 
   int send_sms(const string& rc_path, const string& phone_num, const string& text)
@@ -106,11 +106,15 @@ namespace
      *       */
 
     error = GSM_FindGammuRC(&cfg, rc_path.data());
-    error_handler();
+    if (error_handler() != ERR_NONE) {
+      return error;
+    };
 
     /* Read it */
     error = GSM_ReadConfig(cfg, GSM_GetConfig(s, 0), 0);
-    error_handler();
+    if (error_handler() != ERR_NONE) {
+      return error;
+    };
 
     /* Free config file structures */
     INI_Free(cfg);
@@ -121,7 +125,9 @@ namespace
     /* Connect to phone */
     /* 1 means number of replies you want to wait for */
     error = GSM_InitConnection(s, 1);
-    error_handler();
+    if (error_handler() != ERR_NONE) {
+      return error;
+    };
 
     /* Set callback for message sending */
     /* This needs to be done after initiating connection */
@@ -130,7 +136,9 @@ namespace
     /* We need to know SMSC number */
     PhoneSMSC.Location = 1;
     error = GSM_GetSMSC(s, &PhoneSMSC);
-    error_handler();
+    if (error_handler() != ERR_NONE) {
+      return error;
+    };
 
     /* Set SMSC number in message */
     CopyUnicodeString(sms.SMSC.Number, PhoneSMSC.Number);
@@ -143,7 +151,9 @@ namespace
 
     /* Send message */
     error = GSM_SendSMS(s, &sms);
-    error_handler();
+    if (error_handler() != ERR_NONE) {
+      return error;
+    };
 
     /* Wait for network reply */
     while (!gshutdown) {
@@ -162,7 +172,9 @@ namespace
 
     /* Terminate connection */
     error = GSM_TerminateConnection(s);
-    error_handler();
+    if (error_handler() != ERR_NONE) {
+      return error;
+    };
 
     /* Free up used memory */
     GSM_FreeStateMachine(s);
