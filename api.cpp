@@ -182,23 +182,25 @@ void SMSSend::handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HT
   NameValueCollection::ConstIterator it = request.begin();
   NameValueCollection::ConstIterator end = request.end();
 
+#if 0
   for (; it != end; ++it)
   {
     ostr << it->first << ": " << it->second << "<br>\n";
   }
   ostr << "</p>";
+#endif
 
   string phone_num;
   string sms_text;
 
   if (!form.empty())
   {
-    ostr << "<h2>Form</h2><p>\n";
+    //ostr << "<h2>Form</h2><p>\n";
     it = form.begin();
     end = form.end();
     for (; it != end; ++it)
     {
-      ostr << it->first << ": " << it->second << "<br>\n";
+      //ostr << it->first << ": " << it->second << "<br>\n";
       if (it->first == "phone_num") {
         phone_num = it->second;
       }
@@ -206,9 +208,10 @@ void SMSSend::handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HT
         sms_text = it->second;
       }
     }
-    ostr << "</p>";
+    //ostr << "</p>";
     if (phone_num.size() && sms_text.size()) {
-      send_sms("/etc/gammurc", phone_num, sms_text);
+      int ret = send_sms("/etc/gammurc", phone_num, sms_text);
+      ostr << ret;
     }
   }
 
