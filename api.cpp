@@ -51,7 +51,7 @@ namespace
     return error;
   }
 
-  int send_sms(const string& rc_path, const string& phone_num, const string& text)
+  int send_sms(const string& rc_path, const string& phone, const string& text)
   {
     int return_value = 0;
 
@@ -76,7 +76,7 @@ namespace
     /* Encode message text */
     EncodeUnicode(sms.Text, text.data(), text.length());
     /* Encode recipient number */
-    EncodeUnicode(sms.Number, phone_num.data(), phone_num.length());
+    EncodeUnicode(sms.Number, phone.data(), phone.length());
     /* We want to submit message */
     sms.PDU = SMS_Submit;
     /* No UDH, just a plain message */
@@ -202,7 +202,7 @@ void SMSSend::handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HT
   ostr << "</p>";
 #endif
 
-  string phone_num;
+  string phone;
   string sms_text;
 
   if (!form.empty())
@@ -213,16 +213,16 @@ void SMSSend::handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HT
     for (; it != end; ++it)
     {
       //ostr << it->first << ": " << it->second << "<br>\n";
-      if (it->first == "phone_num") {
-        phone_num = it->second;
+      if (it->first == "phone") {
+        phone= it->second;
       }
       if (it->first == "sms") {
         sms_text = it->second;
       }
     }
     //ostr << "</p>";
-    if (phone_num.size() && sms_text.size()) {
-      int ret = send_sms("/etc/gammurc", phone_num, sms_text);
+    if (phone.size() && sms_text.size()) {
+      int ret = send_sms("/etc/gammurc", phone, sms_text);
       ostr << ret;
     } else {
       ostr << "params not found!";
