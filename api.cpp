@@ -208,7 +208,7 @@ void SMSSend::handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HT
     }
     ostr << "</p>";
     if (phone_num.size() && sms_text.size()) {
-      send_sms("/root/.gammurc", phone_num, sms_text);
+      send_sms("/etc/gammurc", phone_num, sms_text);
     }
   }
 
