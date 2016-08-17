@@ -224,6 +224,8 @@ void SMSSend::handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HT
     if (phone_num.size() && sms_text.size()) {
       int ret = send_sms("/etc/gammurc", phone_num, sms_text);
       ostr << ret;
+    } else {
+      ostr << "params not found!";
     }
   }
 
