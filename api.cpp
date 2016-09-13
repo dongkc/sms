@@ -74,9 +74,9 @@ namespace
     /* Cleanup the structure */
     memset(&sms, 0, sizeof(sms));
     /* Encode message text */
-    EncodeUnicode(sms.Text, text.data(), text.length());
+    EncodeUTF8((char*)sms.Text, (const unsigned char*)text.data());
     /* Encode recipient number */
-    EncodeUnicode(sms.Number, phone.data(), phone.length());
+    EncodeUTF8((char*)sms.Number, (const unsigned char*)phone.data());
     /* We want to submit message */
     sms.PDU = SMS_Submit;
     /* No UDH, just a plain message */
