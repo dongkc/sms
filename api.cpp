@@ -73,10 +73,11 @@ namespace
     /* Prepare message */
     /* Cleanup the structure */
     memset(&sms, 0, sizeof(sms));
-    /* Encode message text */
-    EncodeUTF8((char*)sms.Text, (const unsigned char*)text.data());
+    EncodeUnicode(sms.Text, text.data(), text.length());
     /* Encode recipient number */
-    EncodeUTF8((char*)sms.Number, (const unsigned char*)phone.data());
+    EncodeUnicode(sms.Number, phone.data(), phone.length());
+    /* Encode message text */
+    /* Encode recipient number */
     /* We want to submit message */
     sms.PDU = SMS_Submit;
     /* No UDH, just a plain message */
